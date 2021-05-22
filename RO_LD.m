@@ -217,7 +217,7 @@ for i=1:size(C,1)
 end
 %% Reduce Order Method
 
-%xdot = Ax +Bu(input)
+%xdot = Ax +Bu
 %CONCISE VALUE
 yv = -0.156734375998225
 yp = 0
