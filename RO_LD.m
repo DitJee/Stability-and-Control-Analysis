@@ -18,7 +18,7 @@ Mw = -0.2422;
 Mwd = -0.6325;
 Mq = -1.2458;
 Mele = -0.5842;
-%Dim to Body Axis Lateral A B
+%Dimless to Body Axis Lateral A B
 gam = 2; 
 alp = 8.4;
 Vo = 228.3151; 
