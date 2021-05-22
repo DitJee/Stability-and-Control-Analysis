@@ -2,7 +2,7 @@ clear
 close all
 clc
 
-%% Dimensionless Lateral-directional Body Axes State Space Equation
+%% Dimless Lat Body Axes State Space Equation
 
 Xu =  0.0072;
 Xw =  0.0488;
@@ -19,7 +19,7 @@ Mw = -0.2422;
 Mwd = -0.6325;
 Mq = -1.2458;
 Mele = -0.5842;
-%Dimensionless to Body Axis Lateral A B
+%Dimless to Body Axis Lat A B
 gam = 2;
 alp = 8.4; 
 Vo = 228.3151;
@@ -74,7 +74,7 @@ Vo*Nai Vo*Nrud
 A = M\Ap
 B = M\Bp
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Transforming from Body Axes Dimensionless to Body Axes Dimensional
+%% Transforming from Body Axes Dimless to Body Axes Dim
 c = cbar; 
 DXu = Xu*0.5*rho*Vo*S
 DXw = Xw*0.5*rho*Vo*S
@@ -107,8 +107,8 @@ DNr = Nr*0.5*rho*Vo*S*b*b
 DNai = Nai*0.5*rho*(Vo^2)*S*b
 DNrud = Nrud*0.5*rho*(Vo^2)*S*b
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  Transforming Body Axes Dimensional to Wind Axes Dimensional
-%Dimensional Body to Wind Axes
+%%  Transforming Body Axes Dim to Wind Axes Dim
+%Dim Body to Wind Axes
 co = cos(8.4*pi/180);
 co2 = (cos(8.4*pi/180))^2;
 sn = sin(8.4*pi/180);
@@ -145,8 +145,8 @@ WDNr = DNr*co2 + DLp*sn2 - (DLr + DNp)*sc
 WDNai = DNai*co - DLai*sn
 WDNrud = DNrud*co - DLrud*sn
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Dimensionnal Lateral-directional Wind Axes State Space Equation
-%Dimensional to Wind Axis Lateral A B
+%% Dim Lat Wind Axes State Space Equation
+%Dim to Wind Axis Lateral A B
 Yv = WDYv
 Yp = WDYp
 Yr = WDYr
@@ -182,14 +182,13 @@ Nai Nrud
 A = M\Ap
 B = M\Bp
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  Full-model of Lateral-directional Analysis
-%Setting matrix A,B,C,D
-%lateral-directional transfer function
-%STATE EQUATION MATRIX : xdot = Ax +Bu(input)
+%%  Full-model of Lat Analysis
+% lat transfer function
+% xdot = Ax +Bu(input)
 A=A;
 B=B;
 
-%OUTPUT EQUATION : y = Cx + Du
+% y = Cx + Du
 C= [1 0 0 0
 0 1 0 0
 0 0 1 0
@@ -198,7 +197,7 @@ C= [1 0 0 0
 D=[0 0;0 0;0 0;0 0;0 0]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%set transfer function from Numerator and denomenator
+% set transfer function from Numerator and denomenator
 % input kk: 1 for aileron input
 % input kk: 2 for aileron input
 kk = 1;
@@ -218,7 +217,7 @@ for i=1:size(C,1)
     G(i) = tf((num(i,:)),den);
 end
 
-%transfer function
+% transfer function
 
 for i=1:size(C,1)
     fprintf('\n For output %g : \n',i);
@@ -229,12 +228,12 @@ end
 fprintf('\n Factorised denominator');
 factor(poly2sym(den,sym('s')), 'FactorMode', 'real')
    
-%step response plot
+% step response plot
 % input the desired variable (1 2 3 4 5)
 stepresp = 1;
 step(G(stepresp)*k)
         
-%Final value
+% Final value
 
 syms s
 for i=1:size(C,1)
@@ -254,7 +253,7 @@ for i=1:size(C,1)
     end
 end
    
-%Eigen value and Eigen vector
+% Eigen value and Eigen vector
 
 [V,M] = eig(A);
 EigenValue = M
@@ -266,7 +265,7 @@ fprintf('\n 0 0 0 lamdas*\n');
 EigenVectorMagnitude = abs(V)
 fprintf('\n Dutch Roll        Roll     Spiral');
     
-%Damping Ratio and Undamped Natural Frequency
+% Damping Ratio and Undamped Natural Frequency
     
 dd = factor(poly2sym(den,sym('s')), 'FactorMode', 'real');
 d1 = sym2poly(dd(1));
