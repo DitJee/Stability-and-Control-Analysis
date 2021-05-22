@@ -184,7 +184,7 @@ B = M\Bp
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Full-model of Lat Analysis
 % lat transfer function
-% xdot = Ax +Bu(input)
+% xdot = Ax +Bu
 A=A;
 B=B;
 
