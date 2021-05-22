@@ -264,7 +264,7 @@ fprintf('\n 0 lamdas* 0 0 ');
 fprintf('\n 0 0 lamdap 0 ');
 fprintf('\n 0 0 0 lamdas*\n');
 EigenVectorMagnitude = abs(V)
-fprintf('\n Dutch Roll ------ Roll --- Spiral');
+fprintf('\n Dutch Roll        Roll     Spiral');
     
 %Damping Ratio and Undamped Natural Frequency
     
