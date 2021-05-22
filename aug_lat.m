@@ -1,18 +1,9 @@
 clear
 close all
 clc
-%%Dimensionless Longitudinal Body Axes State Space Equation
-%Dimensionless to Body Axis Longitudinal A B
-gam = 2; %Flight Path Angle (deg)
-alp = 8.4; %Body incidence (deg)
-Vo = 228.3151; %m/s
-m = 23200; %kg
-Iy = 176790;
-rho = 0.8544; %air density (kg/m^3)
-S =  54.148; %Wind Area (m^3)
-cbar =  54.148/12.787; %Mean ARD chord (m)
-g = 9.81; %m/s^2
-% de
+
+%% Dimensionless Lateral-directional Body Axes State Space Equation
+
 Xu =  0.0072;
 Xw =  0.0488;
 Xwd = 0;
@@ -28,42 +19,19 @@ Mw = -0.2422;
 Mwd = -0.6325;
 Mq = -1.2458;
 Mele = -0.5842;
-%------------------------------------------------------
-mp = m/(0.5*rho*Vo*S);
-Iyp = Iy/(0.5*rho*Vo*S*cbar);
-Ue = Vo*cos(alp*pi/180);
-We = Vo*sin(alp*pi/180);
-zta = gam + alp;
-%-----------------------------------------------------
-%------------------------------------------------------
-M = [mp -Xwd*cbar/Vo 0 0
-0 mp-(Zwd*cbar/Vo) 0 0
-0 -Mwd*cbar/Vo Iyp 0
-0 0 0 1]
-Ap = [Xu Xw (Xq*cbar - mp*We) -mp*g*cos(zta*pi/180)
-Zu Zw (Zq*cbar + mp*Ue) -mp*g*sin(zta*pi/180)
-Mu Mw Mq*cbar 0
-0 0 1 0]
-Bp = [Vo*Xele
-Vo*Zele
-Vo*Mele
-0]
-A = M\Ap
-B = M\Bp
-%------------------------------------------------------
-%% Dimensionless Lateral-directional Body Axes State Space Equation
 %Dimensionless to Body Axis Lateral A B
-gam = 2; %Flight Path Angle (deg)
-alp = 8.4; %Body incidence (deg)
-Vo = 228.3151; %m/s
-m = 23200; %kg
+gam = 2; 
+alp = 8.4; 
+Vo = 228.3151; 
+m = 23200;
 Ix = 36424;
 Iz =  186248;
 Ixz = 3600;
-b = 12.787; %Wing Span (m)
-rho = 0.8544; %air density (kg/m^3)
-S =  54.148; %Wind Area (m^3)
-g = 9.81; %m/s^2
+b = 12.787; 
+rho = 0.8544;
+S =  54.148;
+g = 9.81; 
+cbar =  54.148/12.787; 
 Yv = -0.6885;
 Yp = 0;
 Yr = 0;
@@ -79,7 +47,7 @@ Np = -0.0056;
 Nr = -0.1250;
 Nai =  0.0009;
 Nrud = -0.0891;
-%------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 mp = m/(0.5*rho*Vo*S);
 Ixp = Ix/(0.5*rho*Vo*S*b);
 Izp = Iz/(0.5*rho*Vo*S*b);
@@ -87,8 +55,7 @@ Ixzp = Ixz/(0.5*rho*Vo*S*b);
 Ue = Vo*cos(alp*pi/180);
 We = Vo*sin(alp*pi/180);
 zta = gam + alp;
-%------------------------------------------------------
-%-----------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 M = [mp 0 0 0 0
 0 Ixp -Ixzp 0 0
 0 -Ixzp Izp 0 0
@@ -106,54 +73,9 @@ Vo*Nai Vo*Nrud
 0 0]
 A = M\Ap
 B = M\Bp
-%-----------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Transforming from Body Axes Dimensionless to Body Axes Dimensional
-%Body Axes
-%Dimensionless to Dimensional
-% gam = 0; %Flight Path Angle (deg)
-% alp = 20; %Body incidence (deg)
-% Vo = 263.2038583; %m/s
-% m = 16500; %kg
-% Iy = 172500;
-% Ix = 42350;
-% Iz = 187250;
-% Ixz = 3250;
-% rho = 0.54895; %air density (kg/m^3)
-% S = 38.8; %Wind Area (m^3)
-% b = 11.43; %Wing Span (m)
-c = cbar; %Mean ARD chord (m)
-% g = 9.81; %m/s^2
-% Xu = 0.075;
-% Xw = 0.0351;
-% Xwd = 0;
-% Xq = 0;
-% Xele = 0.0627;
-% Zu = -0.933;
-% Zw = -2.15;
-% Zwd = -0.2206;
-% Zq = 0.063;
-% Zele = -0.3747;
-% Mu = 0.0421;
-% Mw = -0.2151;
-% Mwd = -0.5630;
-% Mq = -1.4452;
-% Mele = -0.5445;
-% Yv = -0.5859;
-% Yp = 0;
-% Yr = 0;
-% Yai = -0.0211;
-% Yrud = 0.1814;
-% Lv = -0.1214;
-% Lp = -0.1142;
-% Lr = 0.04201;
-% Lai = 0.0730;
-% Lrud = 0.0062;
-% Nv = 0.0411;
-% Np = -0.0052;
-% Nr = -0.0911;
-% Nai = 0.0008;
-% Nrud = -0.0829;
-fprintf('Dimensional Value:...\n');
+c = cbar; 
 DXu = Xu*0.5*rho*Vo*S
 DXw = Xw*0.5*rho*Vo*S
 DXwd = Xwd*0.5*rho*S*c
@@ -184,7 +106,7 @@ DNp = Np*0.5*rho*Vo*S*b*b
 DNr = Nr*0.5*rho*Vo*S*b*b
 DNai = Nai*0.5*rho*(Vo^2)*S*b
 DNrud = Nrud*0.5*rho*(Vo^2)*S*b
-%-----------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Transforming Body Axes Dimensional to Wind Axes Dimensional
 %Dimensional Body to Wind Axes
 co = cos(8.4*pi/180);
@@ -222,20 +144,9 @@ WDNp = DNp*co2 - DLr*sn2 - (DLp - DNr)*sc
 WDNr = DNr*co2 + DLp*sn2 - (DLr + DNp)*sc
 WDNai = DNai*co - DLai*sn
 WDNrud = DNrud*co - DLrud*sn
-%------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dimensionnal Lateral-directional Wind Axes State Space Equation
 %Dimensional to Wind Axis Lateral A B
-% gam = 0; %Flight Path Angle (deg)
-% alp = 20; %Body incidence (deg)
-% Vo = 263.2038583; %m/s
-% m = 16500; %kg
-% Ix = 42350;
-% Iz = 187250;
-% Ixz = 3250;
-% rho = 0.3809; %air density (kg/m^3)
-% S = 49.239; %Wing Area (m^3)
-% b = 11.787; %Wing Span (m)
-% g = 9.81; %m/s^2
 Yv = WDYv
 Yp = WDYp
 Yr = WDYr
@@ -251,11 +162,11 @@ Np = WDNp
 Nr = WDNr
 Nai = WDNai
 Nrud = WDNrud
-%------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Ue = Vo;
 We = 0;
 zta = gam + alp;
-%------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 M = [ m 0 0 0
     0 Ix -Ixz 0
 0 -Ixz Iz 0
@@ -270,22 +181,22 @@ Nai Nrud
 0 0]
 A = M\Ap
 B = M\Bp
-%------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Full-model of Lateral-directional Analysis
-%Setting matrix A,B,C,D
-%lateral-directional transfer function
-%STATE EQUATION MATRIX : xdot = Ax +Bu(input)
+% Setting matrix A,B,C,D
+% lateral-directional transfer function
+% STATE EQUATION MATRIX : xdot = Ax +Bu(input)
 % K = [34.2 304 32.3 1000 ;
 %      32.5 30.5 39.7    5.3 ]
 % K = [51.3 1.58e+15 41.2 1.58e+15 ;
 %       42.2 33.5 96.6    1.84 ]
 % K =1./K
-K = [0 0 0 0  ;
-     0 0 0 0.5435]
-A=A-B*K
-B=B;
+K = [0.188 0 0 0  ;
+     0 0 0 0]
+A= A-B*K
+B= B;
 
-%OUTPUT EQUATION : y = Cx + Du
+% OUTPUT EQUATION : y = Cx + Du
 C= [1 0 0 0
 0 1 0 0
 0 0 1 0
@@ -294,125 +205,110 @@ C= [1 0 0 0
  
 D=[0 0;0 0;0 0;0 0;0 0]
 C = C - D*K
-%-------------------------------------------------------------------------%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %set transfer function from Numerator and denomenator
-kk = input('\nDetermine for the aileron input(1) or rudder input(2)....');
+% input kk: 1 for aileron input
+% input kk: 2 for aileron input
+kk = 1;
+
 [num,den]=ss2tf(A,B,C,D,kk);
 [num1,den1]=ss2tf(A,B,C,D,1);
 [num2,den2]=ss2tf(A,B,C,D,2);
-k = input('\nStep input = ');
-angle = input('\nDEGREE(0) or RAD(1) = ');
+% input step input
+k = 1;
+% if input is in degree -> input 0
+% if input is in radian -> input 1
+angle = 0
 if(angle == 0)
     k = (pi/180)*k;
 end
 for i=1:size(C,1)
     G(i) = tf((num(i,:)),den);
 end
-cond = 0;
-while cond == 0
-    fprintf('\nWHICH VALUE DO YOU WANT TO FIND');
-    fprintf('\n1) Transfer Function ');
-    fprintf('\n2) Step Response Plot');
-    fprintf('\n3) Final Value ');
-    fprintf('\n4) Eigen Value and Vector ');
-    fprintf('\n5) Damping Ratio and Undamped Natural Frequency');
-    fprintf('\n6) SISO tool');
-    choice = input('\n.....');
-    %transfer function
-    if choice == 1
-        for i=1:size(C,1)
-            fprintf('\n For output %g : \n',i);
-            G(i)
-            fprintf('\n Factorised numerator');
-            factor(poly2sym(num(i,:),sym('s')), 'FactorMode', 'real')
-        end
-        fprintf('\n Factorised denominator');
-        factor(poly2sym(den,sym('s')), 'FactorMode', 'real')
-    end
-    %step response plot
-    if choice == 2
-        cont = 0;
-        while(cont == 0)
-            stepresp = input('\n Step response of variable....');
-            step(G(stepresp)*k)
-            cont = input('\n Do you want to find more step response? YES(0) or NO(1)');
-        end
-    end
-    %Final value
-    if choice == 3
-        fprintf('\n Final Value (STEADY STATE)');
-        syms s
-        for i=1:size(C,1)
-            trf = poly2sym(num(i,:),sym('s'))/poly2sym(den,sym('s'));
-            fv = limit(trf*s*(k/s));
-            if i==1
-                fprintf('\n Variable %g : %.5g m/s',i,vpa(fv));
-            else if i ==2
-                fprintf('\n Variable %g : %.5g deg/s',i,vpa(fv/(pi/180)));
-            else if i ==3
-                fprintf('\n Variable %g : %.5g deg/s',i,vpa(fv/(pi/180)));
-            else if i >3
-                fprintf('\n Variable %g : %.5g deg',i,vpa(fv/(pi/180)));
-                end
-                end
-                end
-            end
-        end
-    end
-    %Eigen value and Eigen vector
-    if choice == 4
-        [V,M] = eig(A);
-        EigenValue = M
-        fprintf('\nNOTES :');
-        fprintf('\n lamdas 0 0 0 ');
-        fprintf('\n 0 lamdas* 0 0 ');
-        fprintf('\n 0 0 lamdap 0 ');
-        fprintf('\n 0 0 0 lamdas*\n');
-        EigenVectorMagnitude = abs(V)
-        fprintf('\n Dutch Roll ------ Roll --- Spiral');
-    end
-    %Damping Ratio and Undamped Natural Frequency
-    if choice == 5
-        dd = factor(poly2sym(den,sym('s')), 'FactorMode', 'real');
-        d1 = sym2poly(dd(1));
-        d2 = sym2poly(dd(2));
-        d3 = sym2poly(dd(3));
-        if size(d1)==3
-            d4 =d3;
-            d3 =d1;
-            d1 =d3;
-        else if size(d2) == 3
-            d4 =d3;
-            d3 =d2;
-            d2 =d3;
-            end
-        end
-        T1 = abs(1/roots(d1));
-        T2 = abs(1/roots(d2));
-        if T1 > T2
-            Ts = -1/roots(d1);
-            Tr = -1/roots(d2);
-        else
-            Ts = -1/roots(d2);
-            Tr = -1/roots(d1);
-        end
-        wd = sqrt(abs(d3(size(d3,2))));
-        drd = d3(size(d3,2)-1)/(2*wd);
-        fprintf('\n Tr (Roll Subsidence Time Constant) = %.5g s',Tr);
-        fprintf('\n Ts (Spiral Time Constant) = %.5g s\n',Ts);
-        fprintf('\n Oscillatory Dutch Roll mode:');
-        fprintf('\n Damping Ratio = %.5g',drd);
-        fprintf('\n Undamped Natural Frequency = %.5g rad/s\n',wd);
-    end
-    %SISO tool
-    if choice == 6
-        cont = 0;
-        while(cont == 0)
-            siso = input('\n SISO of variable....');
-            sisotool(G(siso)*k)
-            cont = input('\n Do you want to find more SISO? YES(0) or NO(1)');
-        end
-    end
-    cond = input('\n Do you want to continue? YES(0) or NO(1)');
+
+%transfer function
+
+for i=1:size(C,1)
+    fprintf('\n For output %g : \n',i);
+    G(i)
+    fprintf('\n Factorised numerator');
+    factor(poly2sym(num(i,:),sym('s')), 'FactorMode', 'real')
 end
-%-------------------------------------------------------
+fprintf('\n Factorised denominator');
+factor(poly2sym(den,sym('s')), 'FactorMode', 'real')
+   
+%step response plot
+% input the desired variable (1 2 3 4 5)
+stepresp = 1;
+step(G(stepresp)*k)
+        
+%Final value
+
+syms s
+for i=1:size(C,1)
+    trf = poly2sym(num(i,:),sym('s'))/poly2sym(den,sym('s'));
+    fv = limit(trf*s*(k/s));
+    if i==1
+        fprintf('\n Variable %g : %.5g m/s',i,vpa(fv));
+    else if i ==2
+        fprintf('\n Variable %g : %.5g deg/s',i,vpa(fv/(pi/180)));
+    else if i ==3
+        fprintf('\n Variable %g : %.5g deg/s',i,vpa(fv/(pi/180)));
+    else if i >3
+        fprintf('\n Variable %g : %.5g deg',i,vpa(fv/(pi/180)));
+        end
+        end
+        end
+    end
+end
+   
+%Eigen value and Eigen vector
+
+[V,M] = eig(A);
+EigenValue = M
+fprintf('\nNOTES :');
+fprintf('\n lamdas 0 0 0 ');
+fprintf('\n 0 lamdas* 0 0 ');
+fprintf('\n 0 0 lamdap 0 ');
+fprintf('\n 0 0 0 lamdas*\n');
+EigenVectorMagnitude = abs(V)
+fprintf('\n Dutch Roll        Roll        Spiral');
+    
+%Damping Ratio and Undamped Natural Frequency
+    
+dd = factor(poly2sym(den,sym('s')), 'FactorMode', 'real');
+d1 = sym2poly(dd(1));
+d2 = sym2poly(dd(2));
+d3 = sym2poly(dd(3));
+if size(d1)==3
+    d4 =d3;
+    d3 =d1;
+    d1 =d3;
+else if size(d2) == 3
+    d4 =d3;
+    d3 =d2;
+    d2 =d3;
+    end
+end
+T1 = abs(1/roots(d1));
+T2 = abs(1/roots(d2));
+if T1 > T2
+    Ts = -1/roots(d1);
+    Tr = -1/roots(d2);
+else
+    Ts = -1/roots(d2);
+    Tr = -1/roots(d1);
+end
+wd = sqrt(abs(d3(size(d3,2))));
+drd = d3(size(d3,2)-1)/(2*wd);
+fprintf('\n Tr = %.3g s',Tr);
+fprintf('\n Ts = %.3g s\n',Ts);
+fprintf('\n Oscillatory Dutch Roll mode:');
+fprintf('\n Damping Ratio = %.3g',drd);
+fprintf('\n Undamped Natural Frequency = %.3g rad/s\n',wd);
+    
+%SISO tool
+% input the desired variable (1 2 3 4 5)
+siso = 1;
+%sisotool(G(siso)*k)
