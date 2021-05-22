@@ -1,3 +1,4 @@
+%% Longitudinal Augmented %%
 s = tf('s');
 kp = 1;
 kd = 1.5552;
