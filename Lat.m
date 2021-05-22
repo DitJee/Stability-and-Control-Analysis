@@ -1,8 +1,7 @@
 clear
 close all
 clc
-
-%% Dimensionless Lateral-directional Body Axes State Space Equation_
+%% Dimensionless Lateral-directional Body Axes State Space Equation
 % de
 Xu =  0.0072;
 Xw =  0.0488;
