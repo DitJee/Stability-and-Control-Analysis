@@ -2,7 +2,7 @@ clear
 close all
 clc
 
-%% Dimensionless Lateral-directional Body Axes State Space Equation
+%% Dimless Lat Body Axes State Space Equation
 Xu =  0.0072;
 Xw =  0.0488;
 Xwd = 0;
@@ -18,7 +18,7 @@ Mw = -0.2422;
 Mwd = -0.6325;
 Mq = -1.2458;
 Mele = -0.5842;
-%Dimensionless to Body Axis Lateral A B
+%Dim to Body Axis Lateral A B
 gam = 2; 
 alp = 8.4;
 Vo = 228.3151; 
@@ -73,7 +73,7 @@ Vo*Nai Vo*Nrud
 A = M\Ap
 B = M\Bp
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Transforming from Body Axes Dimensionless to Body Axes Dimensional
+%% Transforming from Body Axes Dimless to Body Axes Dim
 c = cbar; 
 DXu = Xu*0.5*rho*Vo*S
 DXw = Xw*0.5*rho*Vo*S
@@ -106,8 +106,8 @@ DNr = Nr*0.5*rho*Vo*S*b*b
 DNai = Nai*0.5*rho*(Vo^2)*S*b
 DNrud = Nrud*0.5*rho*(Vo^2)*S*b
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  Transforming Body Axes Dimensional to Wind Axes Dimensional
-%Dimensional Body to Wind Axes
+%%  Transforming Body Axes Dim to Wind Axes Dim
+%Dim Body to Wind Axes
 co = cos(8.4*pi/180);
 co2 = (cos(8.4*pi/180))^2;
 sn = sin(8.4*pi/180);
@@ -144,8 +144,8 @@ WDNr = DNr*co2 + DLp*sn2 - (DLr + DNp)*sc
 WDNai = DNai*co - DLai*sn
 WDNrud = DNrud*co - DLrud*sn
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Dimensionnal Lateral-directional Wind Axes State Space Equation
-%Dimensional to Wind Axis Lateral A B
+%% Diml Lat Wind Axes State Space Equation
+%Dim to Wind Axis Lateral A B
 Yv = WDYv
 Yp = WDYp
 Yr = WDYr
@@ -181,9 +181,8 @@ Nai Nrud
 A = M\Ap
 B = M\Bp
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%  Full-model of Lateral-directional Analysis
-%Setting matrix A,B,C,D
-%lateral-directional transfer function
+%%  Full-model of Lal Analysis
+%lat transfer function
 % xdot = Ax +Bu
 A=A;
 B=B;
@@ -217,8 +216,8 @@ for i=1:size(C,1)
     G(i) = tf((num(i,:)),den);
 end
 %% Reduce Order Method
-%Setting matrix A,B,C,D
-%STATE EQUATION MATRIX : xdot = Ax +Bu(input)
+
+%xdot = Ax +Bu(input)
 %CONCISE VALUE
 yv = -0.156734375998225
 yp = 0
@@ -242,7 +241,7 @@ Ar=[lp 0
 1 0]
 Br=[lai lrud
 0 0]
-%OUTPUT EQUATION : y = Cx + Du
+%y = Cx + Du
 Cr=[1 0
 0 1 ];
 Dr=[0 0;0 0];
