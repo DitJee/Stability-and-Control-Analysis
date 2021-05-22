@@ -242,3 +242,36 @@ EigenMag = abs(V);
 damp(G(1));;
 sisotool(G(1)*k);
 % G(i) to show each variable 
+Ar= M\Ap;
+Br = M\Bp;
+Xu = Ar(1,1);
+Xw = Ar(1,2);
+Xq = Ar(1,3);
+Xtheta = Ar(1,4);
+Zu = Ar(2,1);
+Zw = Ar(2,2);
+Zq = Ar(2,3);
+Ztheta = Ar(2,4);
+Mu = Ar(3,1);
+Mw = Ar(3,2);
+Mq = Ar(3,3);
+Mtheta = Ar(3,4);
+Xele = Br(1);
+Zele = Br(2);
+Mele = Br(3);
+%%%%% Reduced Order Short Period%%%%%
+s = tf('s');
+k = 1*pi/180;
+wn = Zele*(s + Ue*(Mele/Zele))/(s^2 - (Mq + Zw)*s + (Mq*Zw - Mw*Ue));
+wnreal = (-29.14*s^3 - 7119*s^2 - 111.7*s - 34.31)/(s^4 + 1.714*s^3 + 9.857*s^2 + 0.4558*s + 0.09582);
+qn = Mele*(s - Zw)/(s^2 - (Mq + Zw)*s + (Mq*Zw - Mw*Ue));
+qnreal = (-22.1*s^3 - 16.76*s^2 + 0.02252*s)/(s^4 + 1.714*s^3 + 9.857*s^2 + 0.4558*s + 0.09582);
+step(wn*k,wnreal*k,8)
+title('$w(s)/\eta(s)$', 'Interpreter', 'latex', 'FontSize', 16);
+legend('Reduced Order Model','Full Order Model')
+hold on
+figure()
+step(qn*k,qnreal*k,8)
+title('$q(s)/\eta(s)$', 'Interpreter', 'latex', 'FontSize', 16);
+legend('Reduced Order Model','Full Order Model')
+hold off
