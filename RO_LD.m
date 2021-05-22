@@ -3,7 +3,6 @@ close all
 clc
 
 %% Dimensionless Lateral-directional Body Axes State Space Equation
-% de
 Xu =  0.0072;
 Xw =  0.0488;
 Xwd = 0;
@@ -20,18 +19,18 @@ Mwd = -0.6325;
 Mq = -1.2458;
 Mele = -0.5842;
 %Dimensionless to Body Axis Lateral A B
-gam = 2; %Flight Path Angle (deg)
-alp = 8.4; %Body incidence (deg)
-Vo = 228.3151; %m/s
-m = 23200; %kg
+gam = 2; 
+alp = 8.4;
+Vo = 228.3151; 
+m = 23200; 
 Ix = 36424;
 Iz =  186248;
 Ixz = 3600;
-b = 12.787; %Wing Span (m)
-rho = 0.8544; %air density (kg/m^3)
-S =  54.148; %Wind Area (m^3)
-g = 9.81; %m/s^2
-cbar =  54.148/12.787; %Mean ARD chord (m)
+b = 12.787; 
+rho = 0.8544; 
+S =  54.148;
+g = 9.81;
+cbar =  54.148/12.787; 
 Yv = -0.6885;
 Yp = 0;
 Yr = 0;
@@ -75,8 +74,7 @@ A = M\Ap
 B = M\Bp
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Transforming from Body Axes Dimensionless to Body Axes Dimensional
-c = cbar; %Mean ARD chord (m)
-fprintf('Dimensional Value:...\n');
+c = cbar; 
 DXu = Xu*0.5*rho*Vo*S
 DXw = Xw*0.5*rho*Vo*S
 DXwd = Xwd*0.5*rho*S*c
@@ -186,11 +184,11 @@ B = M\Bp
 %%  Full-model of Lateral-directional Analysis
 %Setting matrix A,B,C,D
 %lateral-directional transfer function
-%STATE EQUATION MATRIX : xdot = Ax +Bu(input)
+% xdot = Ax +Bu
 A=A;
 B=B;
 
-%OUTPUT EQUATION : y = Cx + Du
+% y = Cx + Du
 C= [1 0 0 0
 0 1 0 0
 0 0 1 0
@@ -305,8 +303,8 @@ end
 Ts = yr*((lv*np)-(lp*nv))/(yphi*((lr*nv)-(lv*nr)));
 wd = sqrt(nr*yv-nv*yr);
 drd = -(nr+yv)/(2*wd);
-fprintf('\n Tr (Roll Subsidence Time Constant) = %.5g s\n',Tr);
-fprintf('\n Ts (Spiral Time Constant) = %.5g s\n',Ts);
+fprintf('\n Tr = %.3g s\n',Tr);
+fprintf('\n Ts = %.3g s\n',Ts);
 fprintf('\n Oscillatory Dutch Roll mode:');
-fprintf('\n Damping Ratio = %.5g',drd);
-fprintf('\n Undamped Natural Frequency = %.5g rad/s\n',wd);
+fprintf('\n Damping Ratio = %.3g',drd);
+fprintf('\n Undamped Natural Frequency = %.3g rad/s\n',wd);
